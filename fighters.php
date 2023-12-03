@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 require("connect-db.php");
@@ -65,13 +66,14 @@ function isBookmarked($db, $user_id, $fighter_id) {
     return $stmt->fetchColumn() ? true : false;
 }
 ?>
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="background.css">
     <meta charset="UTF-8">
     <title>Fighters List</title>
-    <!-- Add any additional CSS or JS here -->
     <style>
         /* Quick example style for filters */
         .filters {
@@ -82,46 +84,83 @@ function isBookmarked($db, $user_id, $fighter_id) {
         }
     </style>
 </head>
-<body>
-    <h1>Fighters List</h1>
-    <a href="bookmarks.php">My_Bookmarks</a> <!-- Link to the bookmarks page -->
-    
-    <!-- Filters Section -->
-    <div class="filters">
-        <form action="fighters.php" method="post">
-            <?php foreach ($franchises as $franchise): ?>
-                <label>
-                    <input 
-                        type="checkbox" 
-                        name="franchise[]" 
-                        value="<?= htmlspecialchars($franchise['Franchise_ID']) ?>"
-                        <?= in_array($franchise['Franchise_ID'], $selectedFranchises) ? 'checked' : '' ?>
-                    >
-                    <?= htmlspecialchars($franchise['Franchise_Name']) ?>
-                </label><br>
-            <?php endforeach; ?>
-            <input type="submit" name="filter" value="Filter">
-        </form>
-    </div>
-    
-    <!-- Fighters List -->
-    <ul>
-        <?php foreach ($fighters as $fighter): ?>
-            <li>
-                <a href="fighter-details.php?id=<?= htmlspecialchars($fighter['Fighter_ID']) ?>">
-                    <?= htmlspecialchars($fighter['Fighter_Name']) ?>
-                </a>
-                <!-- Bookmark Button -->
-                <form method="post" action="fighters.php">
-                    <input type="hidden" name="fighter_id" value="<?= htmlspecialchars($fighter['Fighter_ID']) ?>">
-                    <button type="submit" name="bookmark">
-                        <?= isBookmarked($db, $user_id, $fighter['Fighter_ID']) ? 'Unbookmark' : 'Bookmark' ?>
-                    </button>
-                </form>
-            </li>
-        <?php endforeach; ?>
-    </ul>
 
-    <a href="homepage.html">Back to Home</a>
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="homepage.html">Smash Bros Catalog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link"href="homepage.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="profilepage.php">Profile Page</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="fighters.php">Characters</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="create_character.php">Create a Character</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="bookmarks.php">Bookmarks</a>
+          </li>
+        </ul>
+  
+      </div>
+    </div>
+  </nav>
+  <body>
+    <div class="container">
+        <h1 class="mb-4">Fighters List</h1>
+        
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-12">
+                <ul class="list-group">
+                    <?php foreach ($fighters as $fighter): ?>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+             
+                                <?= htmlspecialchars($fighter['Fighter_Name']) ?>
+                            
+                            <form method="post" action="fighters.php">
+                                <input type="hidden" name="fighter_id" value="<?= htmlspecialchars($fighter['Fighter_ID']) ?>">
+                                <a class="btn btn-outline-secondary btn-sm" href="fighter-details.php?id=<?= htmlspecialchars($fighter['Fighter_ID']) ?>">View Details</a>
+                                <button type="submit" name="bookmark" class="btn btn-outline-secondary btn-sm">
+                                    <?= isBookmarked($db, $user_id, $fighter['Fighter_ID']) ? 'Unbookmark' : 'Bookmark' ?>
+                                </button>
+                            </form>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+
+            <!-- Filters - Right Side -->
+            <div class="col-lg-4 col-md-5 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="filters mb-3">
+                        <form action="fighters.php" method="post">
+                        <?php foreach ($franchises as $franchise): ?>
+                            <label>
+                                <input 
+                                    type="checkbox" 
+                                    name="franchise[]" 
+                                    value="<?= htmlspecialchars($franchise['Franchise_ID']) ?>"
+                                    <?= in_array($franchise['Franchise_ID'], $selectedFranchises) ? 'checked' : '' ?>
+                                >
+                                <?= htmlspecialchars($franchise['Franchise_Name']) ?>
+                            </label><br>
+                        <?php endforeach; ?>
+                        <input type="submit" name="filter" value="Filter" class="btn btn-primary mt-2">
+                        </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br></br>
 </body>
+
 </html>
