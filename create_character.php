@@ -6,7 +6,7 @@ $user_id = $_SESSION['user_id'] ?? null;
 
 if (!$user_id) {
     // Redirect to login page if not logged in
-    header("Location: login.php");
+    header("Location: sign-up.php");
     exit;
 }
 
@@ -164,91 +164,131 @@ $error = $_SESSION['error'] ?? '';
 unset($_SESSION['message'], $_SESSION['error']);
 ?>
 
-// ... Rest of the HTML form and other code ...
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <link rel="stylesheet" type="text/css" href="background.css">
     <meta charset="UTF-8">
     <title>Create New Fighter</title>
     <!-- Add any additional CSS or JS here -->
 </head>
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="homepage.html">Smash Bros Catalog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link"href="homepage.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="profilepage.php">Profile Page</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="fighters.php">Characters</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="create_character.php">Create a Character</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="bookmarks.php">Bookmarks</a>
+          </li>
+        </ul>
+  
+      </div>
+    </div>
+  </nav>
 <body>
+<div class="card" style="width: 30rem; margin: 20px;">
+                <div class="card-body">
     <h1>Create New Fighter</h1>
-
-    <!-- Display messages -->
+</div>
+</div>
     <?= !empty($message) ? "<p class='success'>$message</p>" : "" ?>
     <?= !empty($error) ? "<p class='error'>$error</p>" : "" ?>
-
+    <div class="container">
     <form action="create_character.php" method="post">
+    <div class="card" style="width: 60rem; margin: 20px;">
+                <div class="card-body">
+    <h2>Basic Info:</h2>
+        <div class="form-group">
+            <label for="fighter_name">Fighter Name:</label>
+            <input type="text" class="form-control" id="fighter_name" name="fighter_name" required>
+        </div>
 
-        <h2>Basic Info:</h2>
-        <label for="fighter_name">Fighter Name:</label>
-        <input type="text" id="fighter_name" name="fighter_name" required><br>
+        <div class="form-group">
+            <label for="franchise_name">Franchise Name:</label>
+            <input type="text" class="form-control" id="franchise_name" name="franchise_name" required>
+        </div>
 
-        <label for="franchise_name">Franchise Name:</label>
-        <input type="text" id="franchise_name" name="franchise_name" required><br>
-
-        <!-- Moveset Details -->
         <h2>Movesets Info:</h2>
+        <div class="form-group">
         <label for="Up_B">Up B:</label>
-        <input type="text" id="Up_B" name="Up_B" required><br>
-
+        <input type="text"  class="form-control" id="Up_B" name="Up_B" required><br>
+        
         <label for="Down_B">Down B:</label>
-        <input type="text" id="Down_B" name="Down_B" required><br>
+        <input type="text" class="form-control" id="Down_B" name="Down_B" required><br>
 
         <label for="Side_B">Side B:</label>
-        <input type="text" id="Side_B" name="Side_B" required><br>
+        <input type="text" class="form-control" id="Side_B" name="Side_B" required><br>
 
         <label for="Neutral_B">Neutral B:</label>
-        <input type="text" id="Neutral_B" name="Neutral_B" required><br>
+        <input type="text" class="form-control" id="Neutral_B" name="Neutral_B" required><br>
 
         <label for="Neutral_A">Neutral A:</label>
-        <input type="text" id="Neutral_A" name="Neutral_A" required><br>
+        <input type="text" class="form-control" id="Neutral_A" name="Neutral_A" required><br>
 
         <label for="Down_A">Down A:</label>
-        <input type="text" id="Down_A" name="Down_A" required><br>
+        <input type="text" class="form-control" id="Down_A" name="Down_A" required><br>
 
         <label for="Up_A">Up A:</label>
-        <input type="text" id="Up_A" name="Up_A" required><br>
+        <input type="text" class="form-control" id="Up_A" name="Up_A" required><br>
 
         <label for="Side_A">Side A:</label>
-        <input type="text" id="Side_A" name="Side_A" required><br>
+        <input type="text" class="form-control" id="Side_A" name="Side_A" required><br>
 
         <label for="Up_Air">Up Air:</label>
-        <input type="text" id="Up_Air" name="Up_Air" required><br>
+        <input type="text" class="form-control" id="Up_Air" name="Up_Air" required><br>
 
         <label for="Down_Air">Down Air:</label>
-        <input type="text" id="Down_Air" name="Down_Air" required><br>
+        <input type="text" class="form-control" id="Down_Air" name="Down_Air" required><br>
 
         <label for="Back_Air">Back Air:</label>
-        <input type="text" id="Back_Air" name="Back_Air" required><br>
+        <input type="text" class="form-control" id="Back_Air" name="Back_Air" required><br>
 
         <label for="Forward_Air">Forward Air:</label>
-        <input type="text" id="Forward_Air" name="Forward_Air" required><br>
+        <input type="text" class="form-control" id="Forward_Air" name="Forward_Air" required><br>
 
         <label for="Neutral_Air">Neutral Air:</label>
-        <input type="text" id="Neutral_Air" name="Neutral_Air" required><br>
-
+        <input type="text" class="form-control" id="Neutral_Air" name="Neutral_Air" required><br>
+        </div>
         <!-- Characteristics Details -->
+        <div class="form-group">
         <h2>Characteristics Info:</h2>
         <label for="Gender">Gender:</label>
-        <input type="text" id="Gender" name="Gender" required><br>
+        <input type="text" class="form-control" id="Gender" name="Gender" required><br>
 
         <label for="Weight_Value">Weight:</label>
-        <input type="number" id="Weight_Value" name="Weight_Value" required><br>
+        <input type="number" class="form-control" id="Weight_Value" name="Weight_Value" required><br>
 
         <label for="Height">Height:</label>
-        <input type="number" id="Height" name="Height" required><br>
+        <input type="number" class="form-control" id="Height" name="Height" required><br>
 
         <label for="Fast">Speed (1-5):</label>
-        <input type="number" id="Fast" name="Fast" min="1" max="5" required><br>
+        <input type="number" class="form-control" id="Fast" name="Fast" min="1" max="5" required><br>
 
-        <input type="submit" value="Create Fighter">
-
+        <input type="submit" class="btn btn-primary" value="Create Fighter">
+</div>
+</div>
+</div>
     </form>
-
-    <a href="fighters.php">Back to Fighters List</a>
+</div>
 </body>
 </html>

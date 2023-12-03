@@ -17,14 +17,7 @@ $stmt->execute([$user_id, $fighter_id]);
 $is_creator = $stmt->fetchColumn() > 0;
 
 // HTML for Edit and Delete buttons (only shown if the user is the creator)
-if ($is_creator) {
-    echo "<a href='edit_fighter.php?fighter_id=$fighter_id'>Edit Fighter</a><br>"; // Link to edit fighter page
-    echo "<form method='post'>
-            <input type='hidden' name='action' value='delete'>
-            <input type='hidden' name='fighter_id' value='$fighter_id'>
-            <input type='submit' value='Delete Fighter'>
-          </form>"; // Form for deleting fighter
-}
+
 
 // Handle the delete request
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'delete') {
@@ -102,46 +95,102 @@ if (isset($_GET['id'])) {
 }
 
 ?>
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="background.css">
+
     <title>Fighter Details</title>
     <!-- Add additional CSS or JS here -->
 </head>
-<body>
-    <h1><?= htmlspecialchars($details['Fighter_Name']) ?> Details</h1>
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="homepage.html">Smash Bros Catalog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link"href="homepage.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="profilepage.php">Profile Page</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="fighters.php">Characters</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="create_character.php">Create a Character</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="bookmarks.php">Bookmarks</a>
+          </li>
+        </ul>
+  
+      </div>
+    </div>
+  </nav>
+  <body>
+    <div class="container my-4">
+        <div class="card my-3">
+            <div class="card-body">
+                <h2 class="card-title"><?= htmlspecialchars($details['Fighter_Name']) ?> Details</h2>
+                <h4>Franchise: <?= htmlspecialchars($details['Franchise_Name']) ?></h4>
+            </div>
+        </div>
 
-    <h2>Franchise: <?= htmlspecialchars($details['Franchise_Name']) ?></h2>
+        <?php
+        if ($is_creator) {
+            echo "<a class='btn btn-secondary btn-sm' href='edit_fighter.php?fighter_id=$fighter_id'>Edit Fighter</a><br>"; 
+            echo "<form method='post'>
+                    <input type='hidden' name='action' value='delete'>
+                    <input type='hidden' name='fighter_id' value='$fighter_id'>
+                    <input type='submit' class='btn btn-danger btn-sm' value='Delete Fighter'>
+                  </form>"; 
+        }
+        ?>
 
-    <h3>Movesets:</h3>
-    <!-- Display movesets details -->
-    <p>Up B: <?= htmlspecialchars($details['Up_B']) ?></p>
-    <p>Down B: <?= htmlspecialchars($details['Down_B']) ?></p>
-    <p>Side B: <?= htmlspecialchars($details['Side_B']) ?></p>
-    <p>Neutral B: <?= htmlspecialchars($details['Neutral_B']) ?></p>
-    <p>Neutral A: <?= htmlspecialchars($details['Neutral_A']) ?></p>
-    <p>Down A: <?= htmlspecialchars($details['Down_A']) ?></p>
-    <p>Up A: <?= htmlspecialchars($details['Up_A']) ?></p>
-    <p>Side A: <?= htmlspecialchars($details['Side_A']) ?></p>
-    <p>Up Air: <?= htmlspecialchars($details['Up_Air']) ?></p>
-    <p>Down Air: <?= htmlspecialchars($details['Down_Air']) ?></p>
-    <p>Back Air: <?= htmlspecialchars($details['Back_Air']) ?></p>
-    <p>Forward Air: <?= htmlspecialchars($details['Forward_Air']) ?></p>
-    <p>Neutral Air: <?= htmlspecialchars($details['Neutral_Air']) ?></p>
+        <div class="row">
+            <!-- First Row -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Moveset:</h3>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item">Up B: <?= htmlspecialchars($details['Up_B']) ?></li>
+                            <li class="list-group-item">Down B: <?= htmlspecialchars($details['Down_B']) ?></li>
+                            <li class="list-group-item">Side B: <?= htmlspecialchars($details['Side_B']) ?></li>
+                            <li class="list-group-item">Neutral B: <?= htmlspecialchars($details['Neutral_B']) ?></li>
+                            <li class="list-group-item">Neutral A: <?= htmlspecialchars($details['Neutral_A']) ?></li>
+                            <li class="list-group-item">Down A: <?= htmlspecialchars($details['Down_A']) ?></li>
+                            <li class="list-group-item">Up A: <?= htmlspecialchars($details['Up_A']) ?></li>
+                            <li class="list-group-item">Side A: <?= htmlspecialchars($details['Side_A']) ?></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Characteristics:</h3>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item">Gender: <?= htmlspecialchars($details['Gender']) ?></li>
+                            <li class="list-group-item">Weight: <?= htmlspecialchars($details['Weight_Value']) ?></li>
+                            <li class="list-group-item">Height: <?= htmlspecialchars($details['Height']) ?></li>
+                            <li class="list-group-item">Speed: <?= htmlspecialchars($details['Fast']) ?> (on a scale of 1 to 5)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-
-    <h3>Characteristics:</h3>
-    <!-- Display characteristics details -->
-    <p>Gender: <?= htmlspecialchars($details['Gender']) ?></p>
-    <p>Weight: <?= htmlspecialchars($details['Weight_Value']) ?></p>
-    <!-- Add all other characteristics here using the same pattern -->
-    <p>Height: <?= htmlspecialchars($details['Height']) ?></p>
-    <p>Speed: <?= htmlspecialchars($details['Fast']) ?> (on a scale of 1 to 5)</p>
-    <!-- ... continue for all other characteristics columns ... -->
-
-    <!-- Add links to other pages or additional content here -->
-    <a href="fighters.php">Back to Fighters List</a>
+          
+          
+        </div>
+    </div>
 </body>
+
 </html>
